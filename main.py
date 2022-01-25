@@ -1,17 +1,23 @@
-
-
+import numpy as np
 class Board:
     def __init__(self, L, b):
         self.A = L
         self.b = b
-        
+
     def addRow(self, x, y, c): #add a c - multiple of x - row to y - row
         L = self.A
         self.b[x-1] += c*self.b[y-1]
         for j in range(len(L[0])):
             L[x-1][j-1] += c*L[y-1][j-1]
         return self
-
+        
+    def det(self):
+        A = np.array(self.A)
+        if len(A) == len(A[0]):
+            return round(np.linalg.det(A))
+        else:
+            return 'no determinant defined'
+        
     def __str__(self):
         s = ''
         L = self.A
@@ -29,6 +35,7 @@ A = [[1, 2, 3, 3],
 b = [10, 20, 30]
 matrix = Board(A, b)
 print(matrix)
+print(matrix.det())
 matrix.addRow(2, 1, -4)
 print(matrix)
 matrix.addRow(3, 1, -7)
@@ -37,4 +44,5 @@ matrix.addRow(3, 2, -2)
 print(matrix)
 matrix.addRow(1, 2, 2/3)
 print(matrix)
+print(matrix.det())
 
